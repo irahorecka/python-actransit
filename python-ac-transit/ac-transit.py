@@ -1,10 +1,9 @@
-import requests
 import functools
+import requests
+import urllib
 from google.transit import gtfs_realtime_pb2
 from protobuf_to_dict import protobuf_to_dict
-import urllib
-from api_data import API_Token
-
+API_Token = 'C3310BE5BBB93CE82D142EADC87FD96B'
 
 class BaseAPI(object):
     """Base wrapper for individual AC Transit APIs"""
@@ -24,11 +23,15 @@ class BaseAPI(object):
         """
         Gets protocol buffer file from the specified URL.
         """
-        with urllib.request.urlopen(self.url) as response:
-            self.protobuf.ParseFromString(response.read())
-            feed_dictionary = protobuf_to_dict(self.protobuf)
+        try:
+            with urllib.request.urlopen(self.url) as response:
+                self.protobuf.ParseFromString(response.read())
+                feed_dictionary = protobuf_to_dict(self.protobuf)
 
-            return feed_dictionary
+        except urllib.error.URLError:
+            raise RuntimeError("No Internet Connection")
+
+        return feed_dictionary
 
     def get_json(self):
         """
@@ -37,8 +40,8 @@ class BaseAPI(object):
         try:
             response = requests.get(self.url)
             response.raise_for_status()
-        except requests.exceptions.HTTPError as error:
-            raise RuntimeError(error)
+        except (requests.exceptions.ConnectionError):
+            raise RuntimeError("No Internet Connection")
 
         return response.json()
 
