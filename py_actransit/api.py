@@ -7,6 +7,7 @@ from api_data import API_Token
 
 
 class BaseAPI(object):
+    """Base wrapper for individual AC Transit APIs"""
     BASE_URL = "https://api.actransit.org/transit"
     api = ''
     key = ''
@@ -20,13 +21,19 @@ class BaseAPI(object):
         return "BaseAPI{obj}".format(obj=object)
 
     def get_protobuf(self):
+        """
+        Gets protocol buffer file from the specified URL.
+        """
         with urllib.request.urlopen(self.url) as response:
-            self.feed.ParseFromString(response.read())
-            feed_dictionary = protobuf_to_dict(self.feed)
+            self.protobuf.ParseFromString(response.read())
+            feed_dictionary = protobuf_to_dict(self.protobuf)
 
             return feed_dictionary
 
     def get_json(self):
+        """
+        Gets JSON file prom the specified URL.
+        """
         try:
             response = requests.get(self.url)
             response.raise_for_status()
@@ -43,6 +50,7 @@ def api_method(method):
         # Validate arguments
         method(self, *args, **kwargs)
 
+        # Create URL
         self.url = "{base_url}/{base_api}/{api}?token={key}".format(
             base_url=self.base_url,
             base_api=self.api,
@@ -51,7 +59,7 @@ def api_method(method):
         )
 
         # Generate API response
-        if self.feed:
+        if self.protobuf:
             api_response = self.get_protobuf()
         else:
             api_response = self.get_json()
@@ -62,8 +70,10 @@ def api_method(method):
 
 
 class GTFSRT(BaseAPI):
+    """API for real time General Transit Feed Specifications:
+    https://api.actransit.org/transit/gtfsrt/"""
     api = 'gtfsrt'
-    feed = gtfs_realtime_pb2.FeedMessage()
+    protobuf = gtfs_realtime_pb2.FeedMessage()
 
     def __repr__(self):
         return "ACTransit(GTFSRT(api_key))"
@@ -82,6 +92,8 @@ class GTFSRT(BaseAPI):
 
 
 class GTFS(BaseAPI):
+    """API for General Transit Feed Specifications:
+    https://api.actransit.org/transit/gtfs/"""
     api = 'gtfs'
 
     def __repr__(self):
@@ -93,7 +105,7 @@ class GTFS(BaseAPI):
 
 
 class ACTransit(object):
-    """Wrapper for the BART API."""
+    """Wrapper for the AC Transit API."""
     gtfsrt = None
     gtfs = None
 
