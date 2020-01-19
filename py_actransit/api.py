@@ -19,22 +19,21 @@ class BaseAPI(object):
     def __repr__(self):
         return "BaseAPI{obj}".format(obj=object)
 
-    def get_protobuf(self, url):
-        with urllib.request.urlopen(url) as response:
+    def get_protobuf(self):
+        with urllib.request.urlopen(self.url) as response:
             self.feed.ParseFromString(response.read())
             feed_dictionary = protobuf_to_dict(self.feed)
 
             return feed_dictionary
 
-    def get_json(self, url):
+    def get_json(self):
         try:
-            response = requests.get(url)
+            response = requests.get(self.url)
             response.raise_for_status()
         except requests.exceptions.HTTPError as error:
             raise RuntimeError(error)
 
         return response.json()
-
 
 
 def api_method(method):
@@ -44,7 +43,7 @@ def api_method(method):
         # Validate arguments
         method(self, *args, **kwargs)
 
-        url = "{base_url}/{base_api}/{api}?token={key}".format(
+        self.url = "{base_url}/{base_api}/{api}?token={key}".format(
             base_url=self.base_url,
             base_api=self.api,
             api=method.__name__,
@@ -53,14 +52,13 @@ def api_method(method):
 
         # Generate API response
         if self.feed:
-            api_response = self.get_protobuf(url)
+            api_response = self.get_protobuf()
         else:
-            api_response = self.get_json(url)
+            api_response = self.get_json()
 
         return api_response
 
     return wrapper
-
 
 
 class GTFSRT(BaseAPI):
@@ -97,6 +95,7 @@ class GTFS(BaseAPI):
 class ACTransit(object):
     """Wrapper for the BART API."""
     gtfsrt = None
+    gtfs = None
 
     def __init__(self, key=API_Token):
         """Initialize the individual APIs with the API key."""
@@ -106,4 +105,3 @@ class ACTransit(object):
 
     def __repr__(self):
         return "ACTransit()"
-
