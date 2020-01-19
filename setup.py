@@ -3,19 +3,19 @@
 import setuptools
 
 
-with open('README.md') as f:
+with open('README.rst') as f:
     README = f.read()
 
 setuptools.setup(
     author="Ira Horecka",
     author_email="ira89@icloud.com",
-    name='actransit',
+    name='python-actransit',
     license="MIT",
     description='Simple Alameda-Contra Costa Transit District API wrapper',
-    version='v0.0.1',
+    version='v0.0.2',
     long_description=README,
     url='https://github.com/irahorecka/python-actransit',
-    packages=setuptools.find_packages(),
+    packages=['actransit'],
     python_requires=">=3.5",
     install_requires=['requests', 'gtfs-realtime-bindings', 'protobuf3-to-dict'],
     classifiers=[
