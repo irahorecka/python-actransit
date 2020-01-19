@@ -35,7 +35,8 @@ Retrieve a Vehicle Position `GTFS <https://gtfs.org/>`__-Realtime feed.
                                     'schedule_relationship': 0,
                                     'trip_id': '751100010'},
                             'vehicle': {'id': '5020'}}},
-                # ...],
+                # ...
+                ],
     'header': {'gtfs_realtime_version': '1.0',
                 'incrementality': 0,
                 'timestamp': 1579463788}}
@@ -58,5 +59,6 @@ Retrieve a list with information for any existing schedule: current, past and fu
     'EarliestServiceDate': '2019-08-10T00:00:00',
     'LatestServiceDate': '2019-12-14T00:00:00',
     'UpdatedDate': '2019-08-01T15:20:19.587'},
-    # ...]
+    # ...
+    ]
 
