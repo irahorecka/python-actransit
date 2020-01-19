@@ -11,7 +11,7 @@ class BaseAPI(object):
     BASE_URL = "https://api.actransit.org/transit"
     api = ''
     key = ''
-    feed = ''
+    protobuf = ''
 
     def __init__(self, key):
         self.base_url = self.BASE_URL.format(api=self.api)
