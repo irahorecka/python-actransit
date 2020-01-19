@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/py_actransit.iml" filepath="$PROJECT_DIR$/.idea/py_actransit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/python-ac-transit.iml" filepath="$PROJECT_DIR$/.idea/python-ac-transit.iml" />
     </modules>
   </component>
 </project>
