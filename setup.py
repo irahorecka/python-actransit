@@ -12,7 +12,7 @@ setuptools.setup(
     name='ac_transit',
     license="MIT",
     description='ac_transit is a python package for querying data from the AC Transit API.',
-    version='v0.0.1',
+    version='v0.0.2',
     long_description=README,
     url='https://github.com/irahorecka/python-ac-transit',
     packages=setuptools.find_packages(),
