@@ -7,7 +7,7 @@ API_Token = 'C3310BE5BBB93CE82D142EADC87FD96B'
 
 class BaseAPI(object):
     """Base wrapper for individual AC Transit APIs"""
-    BASE_URL = "https://api.actransit.org/transit"
+    BASE_URL = "https://api.actransit.org/transit/{api}"
     api = ''
     key = ''
     protobuf = ''
@@ -54,10 +54,9 @@ def api_method(method):
         method(self, *args, **kwargs)
 
         # Create URL
-        self.url = "{base_url}/{base_api}/{api}?token={key}".format(
+        self.url = "{base_url}/{subdir}?token={key}".format(
             base_url=self.base_url,
-            base_api=self.api,
-            api=method.__name__,
+            subdir=method.__name__,
             key=self.key
         )
 
