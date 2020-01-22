@@ -95,7 +95,7 @@ class Gtfs(BaseAPI):
     api = 'gtfs'
 
     def __repr__(self):
-        return "ACTransit({}(api_key))".format(self.__class__.__name__)
+        return "ACTransit({})".format(self.__class__.__name__)
 
     @api_method
     def all(self):
@@ -109,7 +109,7 @@ class Gtfsrt(BaseAPI):
     protobuf = gtfs_realtime_pb2.FeedMessage()
 
     def __repr__(self):
-        return "ACTransit({}(api_key))".format(self.__class__.__name__)
+        return "ACTransit({})".format(self.__class__.__name__)
 
     @api_method
     def alerts(self):
@@ -130,7 +130,7 @@ class Route(BaseAPI):
     api = 'route'
 
     def __repr__(self):
-        return "ACTransit({}(api_key))".format(self.__class__.__name__)
+        return "ACTransit({})".format(self.__class__.__name__)
 
     @api_method
     def all(self):
@@ -169,7 +169,7 @@ class ACTRealtime(BaseAPI):
     api = 'actrealtime'
 
     def __repr__(self):
-        return "ACTransit({}(api_key))".format(self.__class__.__name__)
+        return "ACTransit({})".format(self.__class__.__name__)
 
     @api_method
     def detour(self, rt='', rtdir=''):
@@ -217,7 +217,7 @@ class Vehicle(BaseAPI):
     api = 'vehicle'
 
     def __repr__(self):
-        return "ACTransit({}(api_key))".format(self.__class__.__name__)
+        return "ACTransit({})".format(self.__class__.__name__)
 
     @api_method
     def id(self, id=''):
@@ -231,7 +231,7 @@ class Stops(BaseAPI):
     api = 'stops'
 
     def __repr__(self):
-        return "ACTransit({}(api_key))".format(self.__class__.__name__)
+        return "ACTransit({})".format(self.__class__.__name__)
 
     @api_method
     def all(self):

@@ -1,7 +1,7 @@
 python-actransit
 ================
 
-A simple `Alameda-Contra Costa Transit District <http://www.actransit.org/>`__ API wrapper.
+A simple Alameda-Contra Costa Transit District (`AC Transit <http://www.actransit.org/>`__) API wrapper.
 
 License: `MIT <https://en.wikipedia.org/wiki/MIT_License>`__.
 
