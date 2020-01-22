@@ -28,9 +28,8 @@ class BaseAPI(object):
             with urllib.request.urlopen(self.url) as response:
                 self.protobuf.ParseFromString(response.read())
                 feed_dictionary = protobuf_to_dict(self.protobuf)
-
-        except urllib.error.URLError:
-            raise RuntimeError("No Internet Connection")
+        except urllib.error.URLError as e:
+            raise RuntimeError(e)
 
         return feed_dictionary
 
@@ -41,8 +40,8 @@ class BaseAPI(object):
         try:
             response = requests.get(self.url)
             response.raise_for_status()
-        except (requests.exceptions.ConnectionError):
-            raise RuntimeError("No Internet Connection")
+        except requests.exceptions.ConnectionError as e:
+            raise RuntimeError(e)
 
         return response.json()
 
@@ -57,10 +56,12 @@ def api_method(method):
         kwargs.update(zip(method.__code__.co_varnames[1:], args))
         kwargs.update({'token': self.key})
         # Remove kwargs specific to subclasses
-        if any(name in method.__qualname__ for name in ['Route', 'Vehicle', 'Stops']):
-            illegal_kwargs = ['rt', 'id', 'stopId']
-            for item in illegal_kwargs:
-                kwargs.pop(item, None)
+        if 'Route' in method.__qualname__:
+            kwargs.pop('rt', None)
+        if 'Vehicle' in method.__qualname__:
+            kwargs.pop('id', None)
+        if 'Stops' in method.__qualname__:
+            kwargs.pop('stpid', None)
 
         # Create URL - check for truncated url param.
         kwargs_url = urllib.parse.urlencode(kwargs)
@@ -126,7 +127,10 @@ class Gtfsrt(BaseAPI):
 
 class Route(BaseAPI):
     """API for route information, such as direction, trips, and
-    vehicles on the route"""
+    vehicles on the route:
+    https://api.actransit.org/transit/routes/
+    https://api.actransit.org/transit/route/{rt}/
+    """
     api = 'route'
 
     def __repr__(self):
@@ -165,7 +169,8 @@ class Route(BaseAPI):
 
 class ACTRealtime(BaseAPI):
     """ API to retrieve real time information about detours,
-    predictions, service bulletins and vehicles"""
+    predictions, service bulletins and vehicles:
+    https://api.actransit.org/transit/actrealtime/"""
     api = 'actrealtime'
 
     def __repr__(self):
@@ -213,7 +218,8 @@ class ACTRealtime(BaseAPI):
 
 
 class Vehicle(BaseAPI):
-    """API to retrieve vehicle information by ID"""
+    """API to retrieve vehicle information by ID:
+    https://api.actransit.org/transit/vehicle/{id}/"""
     api = 'vehicle'
 
     def __repr__(self):
@@ -227,7 +233,9 @@ class Vehicle(BaseAPI):
 
 class Stops(BaseAPI):
     """API to retrieve information about stops -
-    such as routes and real-time predictions"""
+    such as routes and real-time predictions:
+    https://api.actransit.org/transit/stops/
+    https://api.actransit.org/transit/stops/{stpid}/"""
     api = 'stops'
 
     def __repr__(self):
@@ -238,13 +246,13 @@ class Stops(BaseAPI):
         self.url_truncate = True
 
     @api_method
-    def predictions(self, stopId=''):
-        self.api = "stops/{}".format(stopId)
+    def predictions(self, stpid=''):
+        self.api = "stops/{}".format(stpid)
         self.url_truncate = False
 
     @api_method
-    def routes(self, stopId=''):
-        self.api = "stops/{}".format(stopId)
+    def routes(self, stpid=''):
+        self.api = "stops/{}".format(stpid)
         self.url_truncate = False
 
 
