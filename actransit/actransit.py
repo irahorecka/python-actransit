@@ -181,7 +181,7 @@ class ACTRealtime(BaseAPI):
         pass
 
     @api_method
-    def direction(self, rt=''):
+    def direction(self, rt):
         pass
 
     @api_method
@@ -226,7 +226,7 @@ class Vehicle(BaseAPI):
         return "ACTransit({})".format(self.__class__.__name__)
 
     @api_method
-    def id(self, id=''):
+    def id(self, id):
         self.api = 'vehicle/{}'.format(id)
         self.url_truncate = True
 
@@ -246,12 +246,12 @@ class Stops(BaseAPI):
         self.url_truncate = True
 
     @api_method
-    def predictions(self, stpid=''):
+    def predictions(self, stpid):
         self.api = "stops/{}".format(stpid)
         self.url_truncate = False
 
     @api_method
-    def routes(self, stpid=''):
+    def routes(self, stpid):
         self.api = "stops/{}".format(stpid)
         self.url_truncate = False
 

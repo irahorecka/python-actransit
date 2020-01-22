@@ -36,6 +36,7 @@ class TestACTransit(unittest.TestCase):
         self.assertIsInstance(result, list)
 
     def test_route_directions(self):
+        # must have kwarg rt
         # must add valid route number of HTTPError will result
         result = ac_transit.route.directions(rt=212)
         self.assertIsInstance(result, dict)
@@ -43,12 +44,14 @@ class TestACTransit(unittest.TestCase):
         self.assertIsInstance(result, dict)
 
     def test_route_trips(self):
+        # must have kwarg rt
         result = ac_transit.route.trips(rt=212)
         self.assertIsInstance(result, dict)
         result = ac_transit.route.trips(rt='212')
         self.assertIsInstance(result, dict)
 
     def test_route_tripsestimates(self):
+        # must have kwarg rt
         result = ac_transit.route.tripsestimates(rt=212)
         self.assertIsInstance(result, dict)
         result = ac_transit.route.tripsestimates(rt=212, fromStopId=51103, toStopId=53305)
@@ -57,18 +60,22 @@ class TestACTransit(unittest.TestCase):
         self.assertIsInstance(result, dict)
 
     def test_route_tripsinstructions(self):
+        # must have kwarg rt
         result = ac_transit.route.tripsinstructions(rt=212)
         self.assertIsInstance(result, dict)
         result = ac_transit.route.tripsinstructions(rt=212, direction='NORTH')
         self.assertIsInstance(result, dict)
 
     def test_route_vehicles(self):
+        # must have kwarg rt
         result = ac_transit.route.vehicles(rt=212)
         self.assertIsInstance(result, dict)
         result = ac_transit.route.vehicles(rt='212')
         self.assertIsInstance(result, dict)
 
     def test_actrealtime_detour(self):
+        result = ac_transit.actrealtime.detour()
+        self.assertIsInstance(result, dict)
         result = ac_transit.actrealtime.detour(rt=212)
         self.assertIsInstance(result, dict)
         # rtdir results in invalid call
