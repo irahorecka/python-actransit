@@ -77,8 +77,8 @@ Get real-time predictions of buses that stop at stop ID 51331.
 
 .. code:: python
 
-    predict_51331 = ac_transit.actrealtime.prediction(stpid=51331)
-    print(predict_51331)
+    predict_stop = ac_transit.actrealtime.prediction(stpid=51331)
+    print(predict_stop)
 
     {'bustime-response': {'prd': [{'des': 'Downtown Berkeley',
                                'dly': False,
@@ -133,6 +133,7 @@ Every method in ``ACTransit``
 
     from actransit import ACTransit
     ac_transit = ACTransit()
+    
 
     # GTFS
     ac_transit.gtfs.all()
