@@ -7,7 +7,7 @@ API_Token = 'C3310BE5BBB93CE82D142EADC87FD96B'
 
 
 class BaseAPI(object):
-    """Base wrapper for individual AC Transit APIs"""
+    """Base wrapper for individual AC Transit APIs."""
     base_url = "https://api.actransit.org/transit"
     api = ''
     key = ''
@@ -21,9 +21,7 @@ class BaseAPI(object):
         return "BaseAPI{obj}".format(obj=object)
 
     def get_protobuf(self):
-        """
-        Gets protocol buffer file from the specified URL.
-        """
+        """Gets protocol buffer file from the specified URL."""
         try:
             with urllib.request.urlopen(self.url) as response:
                 self.protobuf.ParseFromString(response.read())
@@ -34,9 +32,7 @@ class BaseAPI(object):
         return feed_dictionary
 
     def get_json(self):
-        """
-        Gets JSON file prom the specified URL.
-        """
+        """Gets JSON file prom the specified URL."""
         try:
             response = requests.get(self.url)
             response.raise_for_status()
@@ -48,6 +44,7 @@ class BaseAPI(object):
 
 def api_method(method):
     """Decorator for using method signatures to validate and make API calls."""
+
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         # Set method instances
@@ -129,8 +126,7 @@ class Route(BaseAPI):
     """API for route information, such as direction, trips, and
     vehicles on the route:
     https://api.actransit.org/transit/routes/
-    https://api.actransit.org/transit/route/{rt}/
-    """
+    https://api.actransit.org/transit/route/{rt}/"""
     api = 'route'
 
     def __repr__(self):
@@ -168,7 +164,7 @@ class Route(BaseAPI):
 
 
 class ACTRealtime(BaseAPI):
-    """ API to retrieve real time information about detours,
+    """API to retrieve real time information about detours,
     predictions, service bulletins and vehicles:
     https://api.actransit.org/transit/actrealtime/"""
     api = 'actrealtime'
