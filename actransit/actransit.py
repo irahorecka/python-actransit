@@ -5,15 +5,16 @@ from google.transit import gtfs_realtime_pb2
 from protobuf_to_dict import protobuf_to_dict
 API_Token = 'C3310BE5BBB93CE82D142EADC87FD96B'
 
+
 class BaseAPI(object):
     """Base wrapper for individual AC Transit APIs"""
-    BASE_URL = "https://api.actransit.org/transit/{api}"
+    base_url = "https://api.actransit.org/transit"
     api = ''
     key = ''
     protobuf = ''
+    url_truncate = False
 
     def __init__(self, key):
-        self.base_url = self.BASE_URL.format(api=self.api)
         self.key = key
 
     def __repr__(self):
@@ -50,15 +51,32 @@ def api_method(method):
     """Decorator for using method signatures to validate and make API calls."""
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
-        # Validate arguments
+        # Set method instances
         method(self, *args, **kwargs)
+        # Include all other args into kwargs and add API token
+        kwargs.update(zip(method.__code__.co_varnames[1:], args))
+        kwargs.update({'token': self.key})
+        # Remove kwargs specific to subclasses
+        if any(name in method.__qualname__ for name in ['Route', 'Vehicle', 'Stops']):
+            illegal_kwargs = ['rt', 'id', 'stopId']
+            for item in illegal_kwargs:
+                kwargs.pop(item, None)
 
-        # Create URL
-        self.url = "{base_url}/{subdir}?token={key}".format(
-            base_url=self.base_url,
-            subdir=method.__name__,
-            key=self.key
-        )
+        # Create URL - check for truncated url param.
+        kwargs_url = urllib.parse.urlencode(kwargs)
+        if self.url_truncate:
+            self.url = "{base_url}/{api}?{url_extn}".format(
+                base_url=self.base_url,
+                api=self.api,
+                url_extn=kwargs_url
+            )
+        else:
+            self.url = "{base_url}/{api}/{subdir}?{url_extn}".format(
+                base_url=self.base_url,
+                api=self.api,
+                subdir=method.__name__,
+                url_extn=kwargs_url
+            )
 
         # Generate API response
         if self.protobuf:
@@ -71,14 +89,27 @@ def api_method(method):
     return wrapper
 
 
-class GTFSRT(BaseAPI):
+class Gtfs(BaseAPI):
+    """API for General Transit Feed Specifications:
+    https://api.actransit.org/transit/gtfs/"""
+    api = 'gtfs'
+
+    def __repr__(self):
+        return "ACTransit({}(api_key))".format(self.__class__.__name__)
+
+    @api_method
+    def all(self):
+        pass
+
+
+class Gtfsrt(BaseAPI):
     """API for real time General Transit Feed Specifications:
     https://api.actransit.org/transit/gtfsrt/"""
     api = 'gtfsrt'
     protobuf = gtfs_realtime_pb2.FeedMessage()
 
     def __repr__(self):
-        return "ACTransit(GTFSRT(api_key))"
+        return "ACTransit({}(api_key))".format(self.__class__.__name__)
 
     @api_method
     def alerts(self):
@@ -93,29 +124,148 @@ class GTFSRT(BaseAPI):
         pass
 
 
-class GTFS(BaseAPI):
-    """API for General Transit Feed Specifications:
-    https://api.actransit.org/transit/gtfs/"""
-    api = 'gtfs'
+class Route(BaseAPI):
+    """API for route information, such as direction, trips, and
+    vehicles on the route"""
+    api = 'route'
 
     def __repr__(self):
-        return "ACTransit(GTFS(api_key))"
+        return "ACTransit({}(api_key))".format(self.__class__.__name__)
 
     @api_method
     def all(self):
+        self.api = 'routes'
+        self.url_truncate = True
+
+    @api_method
+    def directions(self, rt):
+        self.api = 'route/{}'.format(rt)
+        self.url_truncate = True
+
+    @api_method
+    def trips(self, rt, direction=''):
+        self.api = 'route/{}'.format(rt)
+        self.url_truncate = True
+
+    @api_method
+    def tripsestimates(self, rt, fromStopId='', toStopId=''):
+        self.api = 'route/{}'.format(rt)
+        self.url_truncate = True
+
+    @api_method
+    def tripsinstructions(self, rt, direction=''):
+        self.api = 'route/{}'.format(rt)
+        self.url_truncate = True
+
+    @api_method
+    def vehicles(self, rt):
+        self.api = 'route/{}'.format(rt)
+        self.url_truncate = True
+
+
+class ACTRealtime(BaseAPI):
+    """ API to retrieve real time information about detours,
+    predictions, service bulletins and vehicles"""
+    api = 'actrealtime'
+
+    def __repr__(self):
+        return "ACTransit({}(api_key))".format(self.__class__.__name__)
+
+    @api_method
+    def detour(self, rt='', rtdir=''):
         pass
+
+    @api_method
+    def direction(self, rt=''):
+        pass
+
+    @api_method
+    def line(self):
+        pass
+
+    @api_method
+    def locale(self):
+        pass
+
+    @api_method
+    def pattern(self, pid='', rt=''):
+        pass
+
+    @api_method
+    def prediction(self, stpid='', rt='', vid='', top='', tmres=''):
+        pass
+
+    @api_method
+    def time(self, unixTime=''):
+        pass
+
+    @api_method
+    def servicebulletin(self, rt='', rtdir='', stpid=''):
+        pass
+
+    @api_method
+    def stop(self, rt='', dir='', stpid=''):
+        pass
+
+    @api_method
+    def vehicle(self, vid='', rt='', tmres=''):
+        pass
+
+
+class Vehicle(BaseAPI):
+    """API to retrieve vehicle information by ID"""
+    api = 'vehicle'
+
+    def __repr__(self):
+        return "ACTransit({}(api_key))".format(self.__class__.__name__)
+
+    @api_method
+    def id(self, id=''):
+        self.api = 'vehicle/{}'.format(id)
+        self.url_truncate = True
+
+
+class Stops(BaseAPI):
+    """API to retrieve information about stops -
+    such as routes and real-time predictions"""
+    api = 'stops'
+
+    def __repr__(self):
+        return "ACTransit({}(api_key))".format(self.__class__.__name__)
+
+    @api_method
+    def all(self):
+        self.url_truncate = True
+
+    @api_method
+    def predictions(self, stopId=''):
+        self.api = "stops/{}".format(stopId)
+        self.url_truncate = False
+
+    @api_method
+    def routes(self, stopId=''):
+        self.api = "stops/{}".format(stopId)
+        self.url_truncate = False
 
 
 class ACTransit(object):
     """Wrapper for the AC Transit API."""
-    gtfsrt = None
     gtfs = None
+    gtfsrt = None
+    route = None
+    actrealtime = None
+    vehicle = None
+    stops = None
 
     def __init__(self, key=API_Token):
         """Initialize the individual APIs with the API key."""
         args = (key,)
-        self.gtfsrt = GTFSRT(*args)
-        self.gtfs = GTFS(*args)
+        self.gtfs = Gtfs(*args)
+        self.gtfsrt = Gtfsrt(*args)
+        self.route = Route(*args)
+        self.actrealtime = ACTRealtime(*args)
+        self.vehicle = Vehicle(*args)
+        self.stops = Stops(*args)
 
     def __repr__(self):
         return "ACTransit()"
