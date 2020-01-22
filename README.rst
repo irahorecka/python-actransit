@@ -73,7 +73,7 @@ Get trip information for a bus route (e.g. route 212).
     {'RouteId': '212', 'Name': '212', 'Description': 'Fremont Blvd. - Pacific Commons'}
 
 
-Get real-time predictions of buses that stop at stop ID 51331.
+Get real-time predictions for a bus stop (e.g. stop ID 51331).
 
 .. code:: python
 
@@ -133,7 +133,7 @@ Every method in ``ACTransit``
 
     from actransit import ACTransit
     ac_transit = ACTransit()
-    
+
 
     # GTFS
     ac_transit.gtfs.all()
