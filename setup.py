@@ -1,4 +1,4 @@
-"""Setup for the ac_transit package."""
+"""Setup for the actransit package."""
 
 import setuptools
 
@@ -11,8 +11,8 @@ setuptools.setup(
     author_email="ira89@icloud.com",
     name='python-actransit',
     license="MIT",
-    description='Simple Alameda-Contra Costa Transit District API wrapper',
-    version='v0.0.2',
+    description='Simple Alameda-Contra Costa Transit District (AC Transit) API wrapper',
+    version='v0.1.0',
     long_description=README,
     url='https://github.com/irahorecka/python-actransit',
     packages=['actransit'],
