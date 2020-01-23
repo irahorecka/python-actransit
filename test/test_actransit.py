@@ -6,10 +6,11 @@ import os
 from pathlib import Path
 import sys
 import unittest
-from actransit import ACTransit
 os.chdir(Path(__file__).parent)
 os.chdir('../actransit')
 sys.path.append(os.getcwd())  # required for relative file fetching - run in 'test' directory
+
+from actransit import ACTransit
 ac_transit = ACTransit()
 
 
