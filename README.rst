@@ -163,7 +163,7 @@ Every method in ``ACTransit``
     ac_transit.actrealtime.servicebulletin(rt='', rtdir='', stpid='')  # route ID, route direction, and stop ID
     # (all type int or str, except rtdir, which takes str)
     ac_transit.actrealtime.stop(rt='', dir='', stpid='')  # route ID, route direction, and stop ID
-    # (all type int or str, except rtdir, which takes str)
+    # (all type int or str, except dir, which takes str)
     ac_transit.actrealtime.vehicle(vid='', rt='', tmres='') # vehicle ID, route ID, and time resolution
     # (all type int or str, except tmres, which takes str)
 

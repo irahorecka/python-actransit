@@ -25,11 +25,11 @@ class BaseAPI(object):
         try:
             with urllib.request.urlopen(self.url) as response:
                 self.protobuf.ParseFromString(response.read())
-                feed_dictionary = protobuf_to_dict(self.protobuf)
+                protobuf_json = protobuf_to_dict(self.protobuf)
         except urllib.error.URLError as e:
             raise RuntimeError(e)
 
-        return feed_dictionary
+        return protobuf_json
 
     def get_json(self):
         """Gets JSON file prom the specified URL."""
