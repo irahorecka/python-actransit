@@ -2,18 +2,16 @@
 Unit testing for actransit module in ../actransit
 """
 
-import os
-from pathlib import Path
 import sys
 import unittest
-os.chdir(Path(__file__).parent)
-os.chdir('../actransit')
-sys.path.append(os.getcwd())  # required for relative file fetching - run in 'test' directory
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(BASE_DIR))  # required for relative file fetching - run in 'test' directory
 from actransit import ACTransit
 
 
 class TestACTransit(unittest.TestCase):
-
     def setUp(self):
         # comment out if you want to view instance influence on methods
         self.ac_transit = ACTransit()
@@ -43,14 +41,14 @@ class TestACTransit(unittest.TestCase):
         # must add valid route number of HTTPError will result
         result = self.ac_transit.route.directions(rt=212)
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.route.directions(rt='212')
+        result = self.ac_transit.route.directions(rt="212")
         self.assertIsInstance(result, dict)
 
     def test_route_trips(self):
         # must have kwarg rt
         result = self.ac_transit.route.trips(rt=212)
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.route.trips(rt='212')
+        result = self.ac_transit.route.trips(rt="212")
         self.assertIsInstance(result, dict)
 
     def test_route_tripsestimates(self):
@@ -59,21 +57,23 @@ class TestACTransit(unittest.TestCase):
         self.assertIsInstance(result, dict)
         result = self.ac_transit.route.tripsestimates(rt=212, fromStopId=51103, toStopId=53305)
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.route.tripsestimates(rt='212', fromStopId='51103', toStopId='53305')
+        result = self.ac_transit.route.tripsestimates(
+            rt="212", fromStopId="51103", toStopId="53305"
+        )
         self.assertIsInstance(result, dict)
 
     def test_route_tripsinstructions(self):
         # must have kwarg rt
         result = self.ac_transit.route.tripsinstructions(rt=212)
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.route.tripsinstructions(rt=212, direction='NORTH')
+        result = self.ac_transit.route.tripsinstructions(rt=212, direction="NORTH")
         self.assertIsInstance(result, dict)
 
     def test_route_vehicles(self):
         # must have kwarg rt
         result = self.ac_transit.route.vehicles(rt=212)
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.route.vehicles(rt='212')
+        result = self.ac_transit.route.vehicles(rt="212")
         self.assertIsInstance(result, dict)
 
     def test_actrealtime_detour(self):
@@ -82,22 +82,22 @@ class TestACTransit(unittest.TestCase):
         result = self.ac_transit.actrealtime.detour(rt=212)
         self.assertIsInstance(result, dict)
         # rtdir results in invalid call
-        result = self.ac_transit.actrealtime.detour(rt=212, rtdir='Northbound')
+        result = self.ac_transit.actrealtime.detour(rt=212, rtdir="Northbound")
         self.assertIsInstance(result, dict)
         result = self.ac_transit.actrealtime.detour(212)
         self.assertIsInstance(result, dict)
         # invalid call
-        result = self.ac_transit.actrealtime.detour(212, 'Northbound')
+        result = self.ac_transit.actrealtime.detour(212, "Northbound")
         self.assertIsInstance(result, dict)
         # invalid call
-        result = self.ac_transit.actrealtime.detour('NORTH', 212)
+        result = self.ac_transit.actrealtime.detour("NORTH", 212)
         self.assertIsInstance(result, dict)
 
     def test_actrealtime_direction(self):
         # must have rt kwarg
         result = self.ac_transit.actrealtime.direction(rt=212)
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.actrealtime.direction(rt='212')
+        result = self.ac_transit.actrealtime.direction(rt="212")
         self.assertIsInstance(result, dict)
         result = self.ac_transit.actrealtime.direction(212)
         self.assertIsInstance(result, dict)
@@ -147,9 +147,9 @@ class TestACTransit(unittest.TestCase):
         self.assertIsInstance(result, dict)
         result = self.ac_transit.actrealtime.servicebulletin(rt=212)
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.actrealtime.servicebulletin(rt=212, rtdir='NORTH')
+        result = self.ac_transit.actrealtime.servicebulletin(rt=212, rtdir="NORTH")
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.actrealtime.servicebulletin(rt=212, rtdir='NORTH', stpid=51333)
+        result = self.ac_transit.actrealtime.servicebulletin(rt=212, rtdir="NORTH", stpid=51333)
         self.assertIsInstance(result, dict)
         result = self.ac_transit.actrealtime.servicebulletin(rt=212, stpid=51333)
         self.assertIsInstance(result, dict)
@@ -159,9 +159,9 @@ class TestACTransit(unittest.TestCase):
         self.assertIsInstance(result, dict)
         result = self.ac_transit.actrealtime.stop(rt=212)
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.actrealtime.stop(rt=212, dir='NORTH')
+        result = self.ac_transit.actrealtime.stop(rt=212, dir="NORTH")
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.actrealtime.stop(rt=212, dir='NORTH', stpid=51333)
+        result = self.ac_transit.actrealtime.stop(rt=212, dir="NORTH", stpid=51333)
         self.assertIsInstance(result, dict)
         result = self.ac_transit.actrealtime.stop(rt=212, stpid=51333)
         self.assertIsInstance(result, dict)
@@ -173,7 +173,7 @@ class TestACTransit(unittest.TestCase):
         self.assertIsInstance(result, dict)
         result = self.ac_transit.actrealtime.vehicle(vid=1341, rt=212)
         self.assertIsInstance(result, dict)
-        result = self.ac_transit.actrealtime.vehicle(rt=212, vid='1341')
+        result = self.ac_transit.actrealtime.vehicle(rt=212, vid="1341")
         self.assertIsInstance(result, dict)
         result = self.ac_transit.actrealtime.vehicle(1341)
         self.assertIsInstance(result, dict)
@@ -205,5 +205,5 @@ class TestACTransit(unittest.TestCase):
         self.assertIsInstance(result, list)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
