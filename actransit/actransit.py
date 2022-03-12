@@ -68,16 +68,9 @@ def api_method(method):
         # Create URL - check for truncated url param.
         kwargs_url = urllib.parse.urlencode(kwargs)
         if self.url_truncate:
-            self.url = "{base_url}/{api}?{url_extn}".format(
-                base_url=self.base_url, api=self.api, url_extn=kwargs_url
-            )
+            self.url = f"{self.base_url}/{self.api}?{kwargs_url}"
         else:
-            self.url = "{base_url}/{api}/{subdir}?{url_extn}".format(
-                base_url=self.base_url,
-                api=self.api,
-                subdir=method.__name__,
-                url_extn=kwargs_url,
-            )
+            self.url = f"{self.base_url}/{self.api}/{method.__name__}?{kwargs_url}"
 
         # Generate API response
         if self.protobuf:
@@ -95,7 +88,7 @@ class Gtfs(BaseAPI):
     api = "gtfs"
 
     def __repr__(self):
-        return "ACTransit({})".format(self.__class__.__name__)
+        return f"ACTransit({self.__class__.__name__})"
 
     @api_method
     def all(self):
@@ -110,7 +103,7 @@ class Gtfsrt(BaseAPI):
     protobuf = gtfs_realtime_pb2.FeedMessage()
 
     def __repr__(self):
-        return "ACTransit({})".format(self.__class__.__name__)
+        return f"ACTransit({self.__class__.__name__})"
 
     @api_method
     def alerts(self):
@@ -134,7 +127,7 @@ class Route(BaseAPI):
     api = "route"
 
     def __repr__(self):
-        return "ACTransit({})".format(self.__class__.__name__)
+        return f"ACTransit({self.__class__.__name__})"
 
     @api_method
     def all(self):
@@ -143,27 +136,27 @@ class Route(BaseAPI):
 
     @api_method
     def directions(self, rt):
-        self.api = "route/{}".format(rt)
+        self.api = f"route/{rt}"
         self.url_truncate = True
 
     @api_method
     def trips(self, rt, direction=""):
-        self.api = "route/{}".format(rt)
+        self.api = f"route/{rt}"
         self.url_truncate = True
 
     @api_method
     def tripsestimates(self, rt, fromStopId="", toStopId=""):
-        self.api = "route/{}".format(rt)
+        self.api = f"route/{rt}"
         self.url_truncate = True
 
     @api_method
     def tripsinstructions(self, rt, direction=""):
-        self.api = "route/{}".format(rt)
+        self.api = f"route/{rt}"
         self.url_truncate = True
 
     @api_method
     def vehicles(self, rt):
-        self.api = "route/{}".format(rt)
+        self.api = f"route/{rt}"
         self.url_truncate = True
 
 
@@ -175,7 +168,7 @@ class ACTRealtime(BaseAPI):
     api = "actrealtime"
 
     def __repr__(self):
-        return "ACTransit({})".format(self.__class__.__name__)
+        return f"ACTransit({self.__class__.__name__})"
 
     @api_method
     def detour(self, rt="", rtdir=""):
@@ -225,11 +218,11 @@ class Vehicle(BaseAPI):
     api = "vehicle"
 
     def __repr__(self):
-        return "ACTransit({})".format(self.__class__.__name__)
+        return f"ACTransit({self.__class__.__name__})"
 
     @api_method
     def id(self, id):
-        self.api = "vehicle/{}".format(id)
+        self.api = f"vehicle/{id}"
         self.url_truncate = True
 
 
@@ -242,7 +235,7 @@ class Stops(BaseAPI):
     api = "stops"
 
     def __repr__(self):
-        return "ACTransit({})".format(self.__class__.__name__)
+        return f"ACTransit({self.__class__.__name__})"
 
     @api_method
     def all(self):
@@ -250,12 +243,12 @@ class Stops(BaseAPI):
 
     @api_method
     def predictions(self, stpid):
-        self.api = "stops/{}".format(stpid)
+        self.api = f"stops/{stpid}"
         self.url_truncate = False
 
     @api_method
     def routes(self, stpid):
-        self.api = "stops/{}".format(stpid)
+        self.api = f"stops/{stpid}"
         self.url_truncate = False
 
 
