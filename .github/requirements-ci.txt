@@ -1,0 +1,5 @@
+gtfs-realtime-bindings
+protobuf3-to-dict
+requests
+setuptools
+wheel
