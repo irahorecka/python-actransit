@@ -1,6 +1,13 @@
 python-actransit
 ================
 
+|PyPI version fury.io| |PyPI pyversions|
+
+.. |PyPI version fury.io| image:: https://badge.fury.io/py/python-actransit.svg
+    :target: https://pypi.python.org/pypi/python-actransit
+.. |PyPI pyversions| image:: https://img.shields.io/pypi/pyversions/python-actransit.svg
+    :target: https://pypi.python.org/pypi/python-actransit/
+
 A simple Alameda-Contra Costa Transit District (`AC Transit <http://www.actransit.org/>`__) API wrapper.
 
 Installation
