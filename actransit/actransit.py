@@ -1,8 +1,11 @@
 import functools
-import requests
 import urllib
+
+import requests
 from google.transit import gtfs_realtime_pb2
 from protobuf_to_dict import protobuf_to_dict
+
+from actransit.exceptions import BadResponse, HTTPError
 
 API_Token = "C3310BE5BBB93CE82D142EADC87FD96B"
 
@@ -29,7 +32,7 @@ class BaseAPI:
                 self.protobuf.ParseFromString(response.read())
                 protobuf_json = protobuf_to_dict(self.protobuf)
         except urllib.error.URLError as e:
-            raise RuntimeError(e)
+            raise BadResponse(e) from e
 
         return protobuf_json
 
@@ -39,7 +42,7 @@ class BaseAPI:
             response = requests.get(self.url)
             response.raise_for_status()
         except requests.exceptions.ConnectionError as e:
-            raise RuntimeError(e)
+            raise HTTPError(e) from e
 
         return response.json()
 
