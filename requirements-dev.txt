@@ -1,0 +1,12 @@
+gtfs-realtime-bindings
+protobuf3-to-dict
+requests
+
+absolufy-imports
+black
+flake8
+pre-commit
+pylint
+setuptools
+twine
+wheel
