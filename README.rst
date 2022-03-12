@@ -3,8 +3,6 @@ python-actransit
 
 A simple Alameda-Contra Costa Transit District (`AC Transit <http://www.actransit.org/>`__) API wrapper.
 
-License: `MIT <https://en.wikipedia.org/wiki/MIT_License>`__.
-
 Installation
 ------------
 
@@ -175,7 +173,18 @@ Every method in ``ACTransit``
     ac_transit.stops.predictions(stpid)  # stop ID (type int or str)
     ac_transit.stops.routes(stpid)  # stop ID (type int or str)
 
+Contribute
+----------
+
+- `Issue Tracker <https://github.com/irahorecka/python-actransit/issues>`__
+- `Source Code <https://github.com/irahorecka/python-actransit/tree/master/python-actransit>`__
+
 Support
 -------
 
-If you find any bug or you want to propose a new feature, please use the `issues tracker <https://github.com/irahorecka/python-actransit/issues>`__. I'll be happy to help!
+If you are having issues or would like to propose a new feature, please use the `issues tracker <https://github.com/irahorecka/python-actransit/issues>`__.
+
+License
+-------
+
+The project is licensed under the MIT license.
