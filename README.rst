@@ -183,7 +183,7 @@ Every method in ``ACTransit``
 Contribute
 ----------
 
-- `Issue Tracker <https://github.com/irahorecka/python-actransit/issues>`__
+- `Issues Tracker <https://github.com/irahorecka/python-actransit/issues>`__
 - `Source Code <https://github.com/irahorecka/python-actransit/tree/master/python-actransit>`__
 
 Support

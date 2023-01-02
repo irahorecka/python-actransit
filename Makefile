@@ -13,10 +13,6 @@ unittest: ## Verbosely test ./tests/test_actransit.py
 	python tests/test_actransit.py -v;
 	make clean;
 
-pre-commit: ## Install and autoupdate pre-commit
-	pre-commit install;
-	pre-commit autoupdate;
-
 build: ## Build package distribution files
 	python setup.py sdist bdist_wheel;
 
