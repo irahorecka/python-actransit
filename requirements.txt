@@ -1,4 +1,4 @@
 gtfs-realtime-bindings
-protobuf==4.21.*
+protobuf==3.20.*
 protobuf3-to-dict
 requests
