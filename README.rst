@@ -1,6 +1,10 @@
 python-actransit
 ================
 
+.. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/AC_Transit_logo_%282014%2B%29.svg/1200px-AC_Transit_logo_%282014%2B%29.svg.png
+   :align: center
+   :width: 540px
+
 |PyPI version fury.io| |PyPI pyversions|
 
 .. |PyPI version fury.io| image:: https://badge.fury.io/py/python-actransit.svg
