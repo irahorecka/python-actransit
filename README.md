@@ -5,6 +5,8 @@
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/AC_Transit_logo_%282014%2B%29.svg/1200px-AC_Transit_logo_%282014%2B%29.svg.png" width="50%"/>
 </p>
 
+<br>
+
 [![pypiv](https://img.shields.io/pypi/v/python-actransit.svg)](https://pypi.python.org/pypi/python-actransit)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![continuous-integration](https://github.com/irahorecka/python-actransit/workflows/continuous-integration/badge.svg)](https://github.com/irahorecka/python-actransit/actions)
