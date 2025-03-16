@@ -16,7 +16,7 @@ setuptools.setup(
     long_description=README,
     url="https://github.com/irahorecka/python-actransit",
     packages=["actransit"],
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     install_requires=["gtfs-realtime-bindings", "protobuf3-to-dict", "requests"],
     classifiers=[
         # Trove classifiers
@@ -24,7 +24,6 @@ setuptools.setup(
         "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
