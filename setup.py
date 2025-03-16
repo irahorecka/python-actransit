@@ -12,7 +12,7 @@ setuptools.setup(
     name="python-actransit",
     license="MIT",
     description="Simple Alameda-Contra Costa Transit District (AC Transit) API wrapper",
-    version="v0.1.4",
+    version="v0.1.5",
     long_description=README,
     url="https://github.com/irahorecka/python-actransit",
     packages=["actransit"],
