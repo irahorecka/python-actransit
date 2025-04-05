@@ -9,7 +9,7 @@
 
 [![pypiv](https://img.shields.io/pypi/v/python-actransit.svg)](https://pypi.python.org/pypi/python-actransit)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![continuous-integration](https://github.com/irahorecka/python-actransit/workflows/continuous-integration/badge.svg)](https://github.com/irahorecka/python-actransit/actions)
+[![tests](https://github.com/irahorecka/python-actransit/workflows/tests/badge.svg)](https://github.com/irahorecka/python-actransit/actions)
 [![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/irahorecka/python-actransit/main/LICENSE)
 
 A simple Alameda-Contra Costa Transit District ([AC
